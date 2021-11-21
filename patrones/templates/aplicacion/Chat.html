@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block header %}
+<h1 class="centrar">{% block title %} Chat Con tu Doctor {% endblock %}</h1>
+
+{% endblock %} {% block content %}
+
+<body>
+
+  <div class= "containerch">
+    <div class = "msg-header">
+        <div class = "active">
+            <h4> {{g.user['username']}}</h4>
+        </div>
+    </div>
+
+
+  <div class="chat-page">
+    <div class = "msg-inbox">
+      
+      <div>
+        <ul id="messages"></ul>
+      </div>
+      <div class ="msg-bottom">
+        <div class = "input-group">
+          <input type="text" class = "form-control" id="myMessage" placeholder="Escribe un mensaje" />
+          <div class = "input-group-append">
+            <button class="boton" type="button" id="send">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="action boton" href="{{ url_for('patrones.index') }}">Regresar</a>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+    charset="utf-8"
+  ></script>
+
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+
+  <script  type="text/javascript" src="../../static/js/mensaje.js"></script>
+
+</body>
+
+{% endblock %}

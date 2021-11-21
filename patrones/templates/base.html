@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<title>{% block title %} Inicio {% endblock %}</title>
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
+<link rel="stylesheet" href="{{url_for('static', filename='stylech.css')}}" />
+<!--start ico-->
+<link rel="icon" type="image/png" sizes="16x16" href="static/img/Favicon/ico.png">
+<!--end ico-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" charset="utf-8"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<body>
+  <div class="navbar">
+
+    <img src="/static/img/logo2.png">
+
+
+    <nav>
+      <ul>
+        {% if g.user %}
+
+        <li><span class="usuario">{{ g.user['username'] }}</span></li>
+        <li>
+          <a class="boton" href="{{ url_for('auth.logout') }}">Cerrar Sesión</a>
+        </li>
+        <li><a class="boton" href="{{ url_for('patrones.Chat') }}">Chat</a></li>
+        <li>
+          <a class="action boton" href="{{ url_for('patrones.interfaces', pagina='Enfermedades') }}">Enfermedades</a>
+        </li>
+        <li>
+          <a class="action boton" href="{{ url_for('patrones.interfaces', pagina='interfaces') }}">Biblioteca</a>
+        </li>
+
+        {% else %}
+
+        <li>
+          <a class="boton" href="{{ url_for('auth.register') }}">Registrarse</a>
+        </li>
+        <li>
+          <a class="boton" href="{{ url_for('auth.login') }}">Iniciar Sesión</a>
+        </li>
+
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+  <div class="contentb">
+    <h1>
+      No todos los ojos cerrados duermen,<br />
+      ni todos los ojos abiertos ven
+    </h1>
+    <p>PABLO NERUDA</p>
+    <!--<div class="imp_res"></div>-->
+  </div>
+
+  <section class="content">
+    <header>{% block header %}{% endblock %}</header>
+    {% for message in get_flashed_messages() %}
+    <div class="flash">
+      <h3>{{ message }}</h3>
+    </div>
+    {% endfor %} {% block content %}{% endblock %}
+  </section>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+    </script>
+  <script src="/static/js/script.js"></script>
+  <script>
+    /*var formulario = document.getElementById('formulario')
+    var contenido = document.querySelector('#contenido')
+    function traer() {
+      fetch('/static/js/datos1.json')
+        .then(res => res.json())
+        .then(datos => {
+          console.log(formulario)
+          tabla(datos)
+        })
+    }
+    function tabla(datos) {
+      //console.log(datos)
+      //contenido.innerHTML = ''
+      for (let valor of datos) {
+        contenido.innerHTML += `
+        <tr ALIGN="left" class="table-light">
+          <th scope="row">${valor.Enfermedad}</th>
+          <td>${valor.Metodo}</td>
+          <td>${valor.recomendaciones}</td>
+          <td>${valor.informacion}</td>
+          </tr>
+        `
+      }
+    }
+  
+    */
+    const datos = [
+      {
+        Enfermedad: 'Astigmatismo',
+        Metodo: 'Ejercicios oculares',
+        recomendaciones: 'Realiza este ejercicio 2 o 4 veces al día',
+        informacion: "1. Coloca tu dedo pulgar sobre tu nariz.</br>  2. Mueve tu dedo pulgar en sentido del reloj.</br>  3. Primero, da una vuelta completa y déjalo ahí por 2 o 3 segundos.</br> 4. Regresa tu pulgar a la posición original (por encima de la nariz). </br>  5. Ahora, muévelo a la posición de la 1 del reloj, luego, de las 3, 5, 6, 7, 9, 11 y de nuevo a las 12.</br>     6. No olvides respirar mientras mueves el pulgar desde el centro hacia afuera.</br>   7. Exhala lentamente para relajar tus músculos.</br>"
+      },
+      {
+        Enfermedad: 'Ojo Vago',
+        Metodo: 'Terapia visual',
+        recomendaciones: 'Se recomienda hacer la terapia 2 veces al dia',
+        informacion: '<iframe width="560" height="315" src="https://www.youtube.com/embed/utT7IwFGPyU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+      },
+      {
+        Enfermedad: 'Miopia',
+        Metodo: 'Cirugía ocular LASIK ',
+        recomendaciones: 'Consulta con el médico sobre los posibles efectos secundarios ya que este procedimiento no es reversible.No se recomienda someterse a cirugía refractaria hasta que se estabilice la prescripción de miopía',
+        informacion: "Mediante este procedimiento, el cirujano ocular crea un colgajo delgado en la córnea. Luego emplea un láser para quitar capas internas de la córnea para aplanar su forma redondeada. La recuperación posterior a  una cirugía ocular LASIK suele ser más rápida y ocasiona menos malestar que las otras cirugías de córnea."
+      },
+      {
+        Enfermedad: 'Miopia',
+        Metodo: 'Lentes graduadas',
+        recomendaciones: 'El metodo mas comun muy importante decidir entre las 2 variantes',
+        informacion: "Al usar lentes correctoras para tratar la miopía, se contrarresta el aumento de la curvatura de la córnea o la mayor longitud del ojo. Algunos de los tipos de lentes graduadas son las siguientes:Anteojos,Lentes de contacto"
+      },
+      {
+        Enfermedad: 'Miopia',
+        Metodo: 'Queratectomía subepitelial asistida por láser',
+        recomendaciones: 'Consulta con el médico sobre los posibles efectos secundarios ya que este procedimiento no es reversible',
+        informacion: "El cirujano crea un colgajo ultradelgado en la cubierta protectora externa de la córnea (epitelio). Luego, usa un láser para dar nueva forma a las capas externas de la córnea, aplanar su curvatura y luego recoloca el epitelio."
+      },
+      {
+        Enfermedad: 'Miopia',
+        Metodo: 'Queratectomía fotorrefractiva',
+        recomendaciones: 'Consulta con el médico sobre los posibles efectos secundarios ya que este procedimiento no es reversible',
+        informacion: "Este procedimiento es similar al LASEK, pero el cirujano elimina por completo el epitelio y luego usa el láser para dar nueva forma a la córnea. No se vuelve a colocar el epitelio sino que crece de nuevo de forma natural, de acuerdo con la nueva forma de la córnea."
+      },
+
+      {
+        Enfermedad: 'Miopia',
+        Metodo: 'El medicamento tópico, atropina',
+        recomendaciones: 'Evitar el uso excesivo dejar al ojo recuperarse de la dilatacion',
+        informacion: "Las gotas tópicas de atropina se usan con frecuencia para dilatar la pupila del ojo, a menudo como parte de los exámenes de la vista o antes y después de la cirugía ocular. Las gotas de atropina en varias dosis también pueden ayudar a retardar la progresión de la miopía. No se conoce el mecanismo exacto de este efecto."
+      },
+      {
+        Enfermedad: 'Miopia',
+        Metodo: 'Pasar más tiempo en exteriores',
+        recomendaciones: 'Salir minimo unas 4 horas diarias',
+        informacion: "Pasar tiempo en el exterior durante la adolescencia y los primeros años de la adultez puede disminuir el riesgo de tener miopía más adelante. Los investigadores creen que la exposición a los rayos ultravioleta (UV) del sol puede cambiar la estructura molecular de la esclerótica y la córnea, y ayudarla a mantener su forma"
+      },
+      {
+        Enfermedad: 'Miopia',
+        Metodo: 'Lentes de contacto de doble enfoque',
+        recomendaciones: 'Consultar con el medico especialista',
+        informacion: "Se ha demostrado que un nuevo tipo de lente de contacto de doble enfoque frena la progresión de la miopía en niños de 8 a 12 años."
+      },
+      {
+        Enfermedad: 'Miopia',
+        Metodo: 'Ortoqueratología',
+        recomendaciones: 'Varias horas al dia . consultar con medico especialista',
+        informacion: "Con este procedimiento, usas lentes de contacto rígidos y permeables al gas durante varias horas al día hasta que la curvatura del ojo se iguala. Luego, usarás los lentes con menor frecuencia para mantener la nueva forma. Si suspendes este tratamiento, los ojos regresan a su forma anterior. Hay pruebas de que este lente frena el alargamiento del globo ocular miope, lo que disminuye la miopía."
+      },
+      {
+        Enfermedad: 'Astigmatismo',
+        Metodo: 'Lentes correctivas',
+        recomendaciones: 'Varias horas al dia . consultar con medico especialista',
+        informacion: " Los anteojos están hechos con lentes que ayudan a compensar la forma desigual del ojo. Los lentes hacen que la luz se doble en tu ojo correctamente"
+      },
+      {
+        Enfermedad: 'Astigmatismo',
+        Metodo: 'Cirugía refractiva Epi-LASIK',
+        recomendaciones: 'Consultar con medico especialista',
+        informacion: " Esta es una variación de LASEK. El médico utiliza una hoja roma mecanizada especial, en lugar del alcohol, para separar una porción muy delgada de epitelio. Luego utiliza un láser excimer para remodelar la córnea y reposiciona el epitelio."
+      },
+      {
+        Enfermedad: 'Astigmatismo',
+        Metodo: 'Cirugía refractiva SMILE',
+        recomendaciones: 'Varias horas al dia . consultar con medico especialista',
+        informacion: " Este nuevo tipo de cirugía refractiva remodela la córnea usando un láser para hacer un pedacito de tejido en forma de lente (lentilla) debajo de la superficie de la córnea. Luego, se retira la lentilla a través de una incisión muy pequeña."
+      },
+      {
+        Enfermedad: 'Astigmatismo',
+        Metodo: 'Nano-Gotas',
+        recomendaciones: 'Varias horas al dia . consultar con medico especialista',
+        informacion: " Primero, será necesario medir la vista de la persona a través de una app, para así registrar el grado de miopía o hipermetropía que se posee en los ojos.Después, se mandarán pulsos a los ojos en las áreas a rehabilitar, esto a partir de otra app que estará conectada a un dispositivo láser.Una vez realizado el diagnóstico, se procede a aplicar las gotas en los ojos, las cuales están compuestas por nanopartículas no tóxicas, que corregirán los defectos refractivos de la vista en las partes previamente marcadas por el láser."
+      },
+      {
+        Enfermedad: 'Astigmatismo',
+        Metodo: 'Cirugía ocular LASIK ',
+        recomendaciones: 'Consulta con el médico sobre los posibles efectos secundarios ya que este procedimiento no es reversible.No se recomienda someterse a cirugía refractaria hasta que se estabilice la prescripción de Astigmatismo',
+        informacion: "Con este procedimiento, el cirujano de ojos crea un colgajo articulado delgado en la córnea. Él o ella utiliza un láser excimer para esculpir la forma de la córnea y luego reposiciona el colgajo."
+      },
+      {
+        Enfermedad: 'Ojo Vago',
+        Metodo: 'Parches oculares',
+        recomendaciones: 'dos a seis horas o más al día',
+        informacion: "Para estimular el ojo más débil, el niño usa un parche sobre el ojo con mejor visión durante dos a seis horas o más al día. En casos poco frecuentes, el uso de un parche ocular demasiado tiempo puede causar ambliopía en el ojo tapado. Sin embargo, suele ser reversible."
+      },
+      {
+        Enfermedad: 'Ojo Vago',
+        Metodo: 'Filtro Bangerter',
+        recomendaciones: 'Consultar con el medico especialista el periodo',
+        informacion: "Este filtro especial se coloca en el cristalino del ojo más fuerte. El filtro difumina el ojo más fuerte y, como un parche en el ojo, actúa para estimular el ojo más débil."
+      },
+      {
+        Enfermedad: 'Ojo Vago',
+        Metodo: 'Gotas para los ojos',
+        recomendaciones: 'Diariamente',
+        informacion: "Una gota para los ojos de un medicamento llamado atropina (Isopto Atropine) puede nublar temporalmente la visión en el ojo más fuerte. Por lo general, se recetan para los fines de semana o diariamente. El uso de las gotas anima a tu hijo a usar el ojo más débil y ofrece una alternativa a un parche. Los efectos secundarios incluyen sensibilidad a la luz e irritación de los ojos."
+      },
+      {
+        Enfermedad: 'Ojo Vago',
+        Metodo: 'Cirugía',
+        recomendaciones: 'Consultar con el medico especialista',
+        informacion: "Tu hijo podría necesitar cirugía si tiene párpados caídos o cataratas que causan ambliopía por privación. Si los ojos de tu hijo continúan cruzándose o separándose con las gafas adecuadas, el médico puede recomendar una reparación quirúrgica para enderezar los ojos, además de otros tratamientos para el ojo perezoso."
+      }
+
+
+
+
+
+    ]
+    const formulario = document.querySelector('#formulario')
+    const boton = document.querySelector('#boton')
+    const resultado = document.querySelector('#contenido')
+    const condicional = document.querySelector('#mostrar')
+    
+    const filtrar = () => {    
+      const texto = formulario.value;
+      resultado.innerHTML = ''
+      for (let dato of datos) {
+        let busqueda = dato.Enfermedad;
+        if (busqueda.indexOf(texto) !== -1) {
+          console.log(dato.Enfermedad);
+          resultado.innerHTML += `
+          <div id="contenido" class="card" style="width: 18rem;">
+            <div class="card-header"> <b>${dato.Enfermedad}</b></div>
+          <ul class="list-group list-group-flush">
+    <li class="list-group-item">${dato.Metodo}</li>
+    <li class="list-group-item">${dato.recomendaciones}</li>
+    <!--<li class="list-group-item"><button id="mostrar" type="button" class="btn btn-info" onclick="Mostrar()">Ver mas</button></li>-->
+    <li id="info" class="list-group-item">${dato.informacion}</li>
+  </ul>
+  </div>
+      `
+   
+        }
+      }
+      if (resultado.innerHTML === '') {
+        contenido.innerHTML += `
+      <tr ALIGN="left" class="table-light">
+        <th scope="row">Enfermedad no encontrada</th>
+        
+        </tr>
+      `
+      }
+    }
+    //boton.addEventListener('click', filtrar)
+    formulario.addEventListener('keyup', filtrar)
+    filtrar();
+ 
+  </script>
+</body>

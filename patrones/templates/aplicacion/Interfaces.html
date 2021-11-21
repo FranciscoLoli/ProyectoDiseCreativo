@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% block header %}
+<h1 class="centrar">{% block title %} Biblioteca de metodos {% endblock %}</h1>
+{% endblock %} {% block content %}
+
+
+<input  id="formulario"class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+<!--<button class="btn btn-outline-success my-2 my-sm-0"  type="submit" id="boton">Search</button>-->
+<br>
+
+
+<div id="contenido" class='cards'>
+
+  
+
+</div>
+<div class="centrar">
+  <a class="action boton" href="{{ url_for('patrones.index') }}">Volver</a>
+</div>
+
+{% endblock %}

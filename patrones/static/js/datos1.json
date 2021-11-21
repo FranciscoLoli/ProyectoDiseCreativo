@@ -1,0 +1,21 @@
+[
+    {
+        "Enfermedad": "Astigmatismo",
+        "Metodo": "Ejercicios oculares",
+        "recomendaciones": "Realiza este ejercicio 2 o 4 veces al día",
+        "informacion": "1. Coloca tu dedo pulgar sobre tu nariz.</br>  2. Mueve tu dedo pulgar en sentido del reloj.</br>  3. Primero, da una vuelta completa y déjalo ahí por 2 o 3 segundos.</br> 4. Regresa tu pulgar a la posición original (por encima de la nariz). </br>  5. Ahora, muévelo a la posición de la 1 del reloj, luego, de las 3, 5, 6, 7, 9, 11 y de nuevo a las 12.</br>     6. No olvides respirar mientras mueves el pulgar desde el centro hacia afuera.</br>   7. Exhala lentamente para relajar tus músculos.</br>"
+    },
+    {
+        "Enfermedad": "Ojo Vago",
+        "Metodo": "Terapia visual",
+        "recomendaciones": "Se recomienda hacer la terapia 2 veces al dia",
+        "informacion": "<a href='https://www.youtube.com/embed/utT7IwFGPyU'>Video aqui</a>"
+    },
+    {
+        "Enfermedad": "Miopia",
+        "Metodo": "Cirugía ocular LASIK ",
+        "recomendaciones": "Consulta con el médico sobre los posibles efectos secundarios ya que este procedimiento no es reversible.No se recomienda someterse a cirugía refractaria hasta que se estabilice la prescripción de miopía",
+        "informacion": "Mediante este procedimiento, el cirujano ocular crea un colgajo delgado en la córnea. Luego emplea un láser para quitar capas internas de la córnea para aplanar su forma redondeada. La recuperación posterior a  una cirugía ocular LASIK suele ser más rápida y ocasiona menos malestar que las otras cirugías de córnea."
+    }
+
+]
